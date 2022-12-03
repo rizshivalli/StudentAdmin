@@ -1,11 +1,13 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {Caption} from 'react-native-paper';
+import {StyleSheet, Text, View} from 'react-native';
 
 const StudentList = () => {
+  const [searchQuery, setSearchQuery] = React.useState('');
+
+  const onChangeSearch = query => setSearchQuery(query);
   return (
     <View style={styles.container}>
-      <Caption>This is StudentListScreen</Caption>
+      <Text>This is StudentListScreen</Text>
     </View>
   );
 };

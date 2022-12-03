@@ -1,11 +1,10 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {Caption} from 'react-native-paper';
+import {StyleSheet, Text, View} from 'react-native';
 
 const ChatList = () => {
   return (
     <View style={styles.container}>
-      <Caption>This is chat list</Caption>
+      <Text>This is chat list</Text>
     </View>
   );
 };

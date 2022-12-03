@@ -8,11 +8,9 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 const Main = () => {
   return (
     <SafeAreaProvider>
-      <PaperProvider>
-        <NavigationContainer>
-          <BottomNavigator />
-        </NavigationContainer>
-      </PaperProvider>
+      <NavigationContainer>
+        <BottomNavigator />
+      </NavigationContainer>
     </SafeAreaProvider>
   );
 };
