@@ -9,9 +9,6 @@ const Main = () => {
   return (
     <SafeAreaProvider>
       <PaperProvider>
-        {/* <View>
-          <Text>Welcome to RN</Text>
-        </View> */}
         <NavigationContainer>
           <BottomNavigator />
         </NavigationContainer>
