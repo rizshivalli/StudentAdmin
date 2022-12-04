@@ -1,8 +1,6 @@
-import Card from '@components/card';
 import React, {useEffect} from 'react';
 import {
   FlatList,
-  Image,
   StyleSheet,
   Text,
   TextInput,
@@ -11,6 +9,7 @@ import {
 } from 'react-native';
 import SearchFilled from '../../assets/icons/SearchFilled.svg';
 import {faker} from '@faker-js/faker';
+import FastImage from 'react-native-fast-image';
 
 const DATA = [
   {
@@ -88,7 +87,7 @@ const StudentList = ({navigation, token, login}) => {
         }}
         onPress={() => navigation.navigate('StudentProfile', {item})}>
         <View>
-          <Image source={{uri: student_picture}} style={styles.image} />
+          <FastImage source={{uri: student_picture}} style={styles.image} />
         </View>
         <View style={{flexDirection: 'column', paddingLeft: 10}}>
           <View style={{flexDirection: 'row'}}>

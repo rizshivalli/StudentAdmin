@@ -1,12 +1,6 @@
 import React from 'react';
-import {
-  Image,
-  StyleSheet,
-  Text,
-  View,
-  Switch,
-  TouchableOpacity,
-} from 'react-native';
+import {StyleSheet, Text, View, Switch, TouchableOpacity} from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 const StudentProfile = ({navigation, route}) => {
   const {item} = route.params || {};
@@ -23,7 +17,7 @@ const StudentProfile = ({navigation, route}) => {
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
-        <Image source={{uri: student_picture}} style={styles.image} />
+        <FastImage source={{uri: student_picture}} style={styles.image} />
         <Text
           style={
             styles.studentName
