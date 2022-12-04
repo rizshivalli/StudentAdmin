@@ -1,15 +1,8 @@
 import React, {useEffect} from 'react';
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import SearchFilled from '../../assets/icons/SearchFilled.svg';
+import {FlatList, StyleSheet, TextInput, View} from 'react-native';
 import {faker} from '@faker-js/faker';
-import FastImage from 'react-native-fast-image';
+import StudentCardItem from '../../components/StudentCardItem';
+import SearchBar from '../../components/SearchBar';
 
 interface StudentListData {
   id: string;
@@ -24,13 +17,6 @@ interface StudentListData {
 
 const StudentList = ({navigation, token, login, students}) => {
   const [searchQuery, setSearchQuery] = React.useState('');
-  console.log(
-    '%cMyProject%cline:28%csearchQuery',
-    'color:#fff;background:#ee6f57;padding:3px;border-radius:2px',
-    'color:#fff;background:#1f3c88;padding:3px;border-radius:2px',
-    'color:#fff;background:rgb(251, 178, 23);padding:3px;border-radius:2px',
-    searchQuery,
-  );
   const [studentList, setStudentList] = React.useState<StudentListData[]>([
     ...students,
     ...Array.from({length: 20}, () => ({
@@ -43,6 +29,7 @@ const StudentList = ({navigation, token, login, students}) => {
       student_profile_enabled: faker.datatype.boolean(),
     })),
   ]);
+  const [searchList, setSearchList] = React.useState<StudentListData[]>([]);
 
   useEffect(() => {
     if (!token) {
@@ -51,72 +38,37 @@ const StudentList = ({navigation, token, login, students}) => {
     return () => {};
   }, [token, login]);
 
-  const onSearch = query => setSearchQuery(query);
+  const onSearch = (query: string) => {
+    setSearchQuery(query);
+    // search studentList for query in Student_last_name
+    const filteredList = studentList.filter(student =>
+      student.student_last_name
+        .toLowerCase()
+        .includes(query.trim().toLowerCase()),
+    );
+    setSearchList(filteredList);
+  };
 
   const renderItem = ({item}) => {
-    const {
-      student_picture,
-      student_first_name,
-      student_last_name,
-      student_class,
-      student_roll_no,
-    } = item;
     return (
-      <TouchableOpacity
-        style={{
-          flex: 1,
-          flexDirection: 'row',
-          margin: 5,
-          borderWidth: 1,
-          borderColor: 'lightgrey',
-          borderRadius: 12,
-        }}
-        onPress={() => navigation.navigate('StudentProfile', {item})}>
-        <View>
-          <FastImage
-            source={{uri: student_picture, priority: FastImage.priority.high}}
-            style={styles.image}
-          />
-        </View>
-        <View style={{flexDirection: 'column', paddingLeft: 10}}>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={styles.title}>Last Name : </Text>
-            <Text style={styles.info}>{student_last_name}</Text>
-          </View>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={styles.title}>Class : </Text>
-            <Text style={styles.info}>{student_class}</Text>
-          </View>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={styles.title}>Roll Number: </Text>
-            <Text style={styles.info}>{student_roll_no}</Text>
-          </View>
-        </View>
-      </TouchableOpacity>
+      <StudentCardItem
+        item={item}
+        onPress={() => navigation.navigate('StudentProfile', {item})}
+      />
     );
   };
 
   return (
     <View style={styles.container}>
-      <View style={styles.searchCard}>
-        <TextInput
-          placeholder="Search Name or Phone No."
-          style={styles.search}
-          onChangeText={onSearch}
-          value={searchQuery}
-          autoFocus={true}
-        />
-
-        <SearchFilled width={25} height={25} />
-      </View>
+      <SearchBar onSearch={onSearch} searchQuery={searchQuery} />
       {studentList && (
         <View>
           <FlatList
             initialNumToRender={20}
             showsVerticalScrollIndicator={false}
-            data={studentList}
+            data={searchQuery.length ? searchList : studentList}
             renderItem={renderItem}
-            keyExtractor={item => item.id.toString()}
+            keyExtractor={item => item.id?.toString()}
             onEndReachedThreshold={0.9}
             onEndReached={() => {
               // append more data to the list
@@ -144,35 +96,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-  },
-  search: {
-    fontSize: 13.5,
-    width: '90%',
-    color: '#000',
-  },
-  searchCard: {
-    flexDirection: 'row',
-    backgroundColor: '#FFFFFF',
-    borderRadius: 8,
-    height: 42,
-    alignItems: 'center',
-    paddingLeft: 10,
-    // borderWidth: 1,
-    borderColor: 'lightgrey',
-  },
-  title: {
-    fontSize: 13.5,
-    color: 'black',
-  },
-  info: {
-    fontSize: 14,
-    color: 'black',
-    fontWeight: 'bold',
-  },
-  image: {
-    width: 100,
-    height: 100,
-    borderRadius: 12,
   },
 });
 export default StudentList;

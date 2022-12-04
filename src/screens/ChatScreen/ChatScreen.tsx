@@ -22,7 +22,11 @@ const ChatScreen = ({
     return () => {
       if (messages.length) {
         storeMessages({user_id: item.id, messages: messages});
-        storeStudentChatList(item);
+        // add date to item object
+        if (previousMessages.length !== messages.length) {
+          item.date = +new Date();
+          storeStudentChatList(item);
+        }
       }
     };
   }, [messages]);

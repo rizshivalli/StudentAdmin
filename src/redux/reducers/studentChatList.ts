@@ -12,7 +12,6 @@ export default (
 ) => {
   switch (type) {
     case `${STORE_STUDENT_CHAT_LIST}`:
-      // check if payload.id is already in state.students
       const studentIndex = state.students.findIndex(
         (student: any) => student.id === payload.id,
       );
@@ -23,10 +22,18 @@ export default (
           ...state,
           students: [...state.students, payload],
         };
+      } else {
+        // update student in state.students
+        return {
+          ...state,
+          students: [
+            ...state.students.slice(0, studentIndex),
+            payload,
+            ...state.students.slice(studentIndex + 1),
+          ],
+        };
       }
-      return {
-        ...state,
-      };
+
     default:
       return state;
   }
