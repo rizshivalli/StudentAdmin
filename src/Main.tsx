@@ -1,11 +1,11 @@
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
 import {ActivityIndicator, StyleSheet} from 'react-native';
-import BottomNavigator from './navigation/BottomNavigator';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/es/integration/react';
 import configureStore from './redux/store';
+import StackNavigation from './navigation/StackNavigation';
 
 const Main = () => {
   const {persistor, store} = configureStore();
@@ -17,7 +17,7 @@ const Main = () => {
       <Provider store={store}>
         <PersistGate loading={<ActivityIndicator />} persistor={persistor}>
           <NavigationContainer>
-            <BottomNavigator />
+            <StackNavigation />
           </NavigationContainer>
         </PersistGate>
       </Provider>

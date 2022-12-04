@@ -85,7 +85,7 @@ const StudentList = ({navigation, token, login}) => {
           borderColor: 'lightgrey',
           borderRadius: 12,
         }}
-        onPress={() => navigation.navigate('StudentDetails', {item})}>
+        onPress={() => navigation.navigate('StudentProfile', {item})}>
         <View>
           <Image source={{uri: student_picture}} style={styles.image} />
         </View>

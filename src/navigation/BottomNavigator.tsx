@@ -1,5 +1,6 @@
 import React, {ReactElement, SVGProps} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+
 // screens
 import StudentList from '../screens/StudentList';
 import ChatList from '../screens/ChatList';
