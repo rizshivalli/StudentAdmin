@@ -1,7 +1,10 @@
 import React, {ReactElement, SVGProps} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+// screens
 import StudentList from '../screens/StudentList';
 import ChatList from '../screens/ChatList';
+
+// icons
 import StudentOutlined from '../assets/icons/StudentOutlined.svg';
 import StudentFilled from '../assets/icons/StudentFilled.svg';
 import ChatOutlined from '../assets/icons/ChatOutlined.svg';

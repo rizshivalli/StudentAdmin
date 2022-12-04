@@ -1,5 +1,5 @@
 import Card from '@components/card';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {FlatList, StyleSheet, Text, TextInput, View} from 'react-native';
 import SearchFilled from '../../assets/icons/SearchFilled.svg';
 
@@ -24,7 +24,7 @@ const Item = ({title}) => (
   </Card>
 );
 
-const StudentList = () => {
+const StudentList = ({navigation, token, login}) => {
   const [searchQuery, setSearchQuery] = React.useState('');
   console.log(
     '%cMyProject%cline:28%csearchQuery',
@@ -33,6 +33,13 @@ const StudentList = () => {
     'color:#fff;background:rgb(251, 178, 23);padding:3px;border-radius:2px',
     searchQuery,
   );
+
+  useEffect(() => {
+    if (!token) {
+      login();
+    }
+    return () => {};
+  }, [token, login]);
 
   const onSearch = query => setSearchQuery(query);
 

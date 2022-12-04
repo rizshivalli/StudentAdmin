@@ -9,13 +9,6 @@ import configureStore from './redux/store';
 
 const Main = () => {
   const {persistor, store} = configureStore();
-  console.log(
-    '%cMyProject%cline:12%cstore',
-    'color:#fff;background:#ee6f57;padding:3px;border-radius:2px',
-    'color:#fff;background:#1f3c88;padding:3px;border-radius:2px',
-    'color:#fff;background:rgb(1, 77, 103);padding:3px;border-radius:2px',
-    store,
-  );
 
   console.log('tesds');
 

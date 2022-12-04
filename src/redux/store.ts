@@ -20,8 +20,6 @@ let composeEnhancers = compose;
 if (__DEV__) {
   // @ts-ignore
   composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-  const createDebugger = require('redux-flipper').default;
-  middleware.push(createDebugger());
 }
 
 const persistConfig = {

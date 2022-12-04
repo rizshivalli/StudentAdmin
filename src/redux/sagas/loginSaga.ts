@@ -8,8 +8,6 @@ import {
   PutEffect,
 } from 'redux-saga/effects';
 import {REQUEST, LOG_IN, SUCCESS, FAIL} from '../actions';
-
-import NavigationService from '@utils/NavigationService';
 import {getErrorMessage} from '../../utils/ErrorUtil';
 import {API_INSTANCE} from '../../utils/ApiUtils';
 import {LOGIN_URL} from '../../constants/ApiEndpoints';
@@ -25,12 +23,19 @@ function* Login({payload, callback = function () {}}: any): Generator<
 > {
   try {
     const res = yield call(API_INSTANCE().post, LOGIN_URL, {
-      data: payload,
+      ...payload,
     });
+    console.log(
+      '%cMyProject%cline:25%cres',
+      'color:#fff;background:#ee6f57;padding:3px;border-radius:2px',
+      'color:#fff;background:#1f3c88;padding:3px;border-radius:2px',
+      'color:#fff;background:rgb(56, 13, 49);padding:3px;border-radius:2px',
+      res.data,
+    );
 
     yield put({
       type: `${LOG_IN}_${SUCCESS}`,
-      payload: {...res.data.data, ...payload},
+      payload: {...res.data},
     });
 
     callback && callback(res.data.data?.otp_token);

@@ -11,12 +11,12 @@ const commonConfig = {
 };
 
 export const API_INSTANCE = (token?: string) => {
-  const hbookInstance = axios.create({
+  const apiInstance = axios.create({
     ...commonConfig,
     baseURL: BASE_URL,
   });
 
-  hbookInstance.interceptors.request.use(
+  apiInstance.interceptors.request.use(
     config => {
       if (token) {
         config.headers.token = token;
@@ -28,7 +28,7 @@ export const API_INSTANCE = (token?: string) => {
     },
   );
 
-  hbookInstance.interceptors.response.use(
+  apiInstance.interceptors.response.use(
     (response: AxiosResponse) => {
       const {data} = response || {};
       const {api_error, error} = data || {};
@@ -42,5 +42,5 @@ export const API_INSTANCE = (token?: string) => {
       return Promise.reject(response || request);
     },
   );
-  return hbookInstance;
+  return apiInstance;
 };

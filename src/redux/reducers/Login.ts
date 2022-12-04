@@ -1,11 +1,15 @@
 /* Login Reducer
  * handles login states in the app
  */
-import {SUCCESS, LOG_IN, REQUEST} from '../actions';
+import {SUCCESS, LOG_IN} from '../actions';
 
 export const initialState = {
-  email: undefined,
-  token: undefined,
+  jwt: undefined,
+  user: {
+    id: undefined,
+    username: undefined,
+    email: undefined,
+  },
 };
 
 export default (
@@ -16,14 +20,9 @@ export default (
     case `${LOG_IN}_${SUCCESS}`:
       return {
         ...state,
-        email: payload.email,
+        ...payload,
       };
 
-      return {
-        ...state,
-        token: payload.emr_token,
-        book_token: payload.book_token,
-      };
     default:
       return state;
   }

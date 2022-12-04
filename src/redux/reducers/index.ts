@@ -1,6 +1,7 @@
 import {CombinedState, combineReducers} from 'redux';
 import loading from './loading';
 import error from './error';
+import loginReducer from './login';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {reducer as network} from 'react-native-offline';
@@ -10,6 +11,7 @@ import {NetworkState} from 'react-native-offline/dist/src/types';
 const appReducer = combineReducers({
   loading,
   error,
+  loginReducer,
   network,
 });
 

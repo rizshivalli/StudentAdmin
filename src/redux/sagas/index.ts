@@ -1,6 +1,6 @@
 import {all, fork} from 'redux-saga/effects';
 
-import LoginSaga from './Login';
+import LoginSaga from './loginSaga';
 
 import {networkSaga} from 'react-native-offline';
 
