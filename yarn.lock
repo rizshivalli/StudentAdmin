@@ -2812,11 +2812,6 @@ csstype@^3.0.2:
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.1.1.tgz#841b532c45c758ee546a11d5bd7b7b473c8c30b9"
   integrity sha512-DJR/VvkAvSZW9bTouZue2sSxDwdTN92uHjqeKVm+0dAqdfNykRzQ95tay8aXMBAAPpUiq4Qcug2L7neoRh2Egw==
 
-cycle@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/cycle/-/cycle-1.0.3.tgz#21e80b2be8580f98b468f379430662b046c34ad2"
-  integrity sha512-TVF6svNzeQCOpjCqsy0/CSy8VgObG3wXusJ73xW2GbG5rGx7lC8zxDSURicsXI2UsGdi2L0QNRCi745/wUDvsA==
-
 data-urls@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/data-urls/-/data-urls-2.0.0.tgz#156485a72963a970f5d5821aaf642bef2bf2db9b"
@@ -2831,7 +2826,7 @@ dayjs@1.8.26:
   resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.8.26.tgz#c6d62ccdf058ca72a8d14bb93a23501058db9f1e"
   integrity sha512-KqtAuIfdNfZR5sJY1Dixr2Is4ZvcCqhb0dZpCOt5dGEFiMzoIbjkTSzUb4QKTCsP+WNpGwUjAFIZrnZvUxxkhw==
 
-dayjs@^1.8.15, dayjs@^1.8.29:
+dayjs@^1.8.15:
   version "1.11.6"
   resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.6.tgz#2e79a226314ec3ec904e3ee1dd5a4f5e5b1c7afb"
   integrity sha512-zZbY5giJAinCG+7AGaw0wIhNZ6J8AhWuSXKvuc1KAyMiRsvGQWqh4L+MomvhdAYjN+lqvVCMq1I41e3YHvXkyQ==
@@ -6204,11 +6199,6 @@ react-native-communications@2.2.1:
   resolved "https://registry.yarnpkg.com/react-native-communications/-/react-native-communications-2.2.1.tgz#7883b56b20a002eeb790c113f8616ea8692ca795"
   integrity sha512-5+C0X9mopI0+qxyQHzOPEi5v5rxNBQjxydPPiKMQSlX1RBIcJ8uTcqUPssQ9Mo8p6c1IKIWJUSqCj4jAmD0qVQ==
 
-react-native-flipper@^0.176.0:
-  version "0.176.0"
-  resolved "https://registry.yarnpkg.com/react-native-flipper/-/react-native-flipper-0.176.0.tgz#e5ee330f67375677c96c6d05af7e757e5844f086"
-  integrity sha512-gdru74mvZIFahyw9fvvWWiKy3NOBpiH7WBfLBvwqQAQXaTD8V+8SIpnc1tXgsf3Hy9k2dQFlroqilQKozZPUTw==
-
 react-native-gifted-chat@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/react-native-gifted-chat/-/react-native-gifted-chat-1.0.4.tgz#36d11ecc44896a83ca188aeefab2f2e4c098a080"
@@ -6439,14 +6429,6 @@ recast@^0.20.4:
     esprima "~4.0.0"
     source-map "~0.6.1"
     tslib "^2.0.1"
-
-redux-flipper@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/redux-flipper/-/redux-flipper-2.0.2.tgz#5deca22ef81e71253912fdf8a403f272db9ed27f"
-  integrity sha512-X6OD3+Ok8g0SunzrwS5OtbE735eBDxLz3uuK4fdJSwbAzskqOS3SWc+rKuOpqmLkt8pN+Szp7Nof9Etm75B1Rg==
-  dependencies:
-    cycle "^1.0.3"
-    dayjs "^1.8.29"
 
 redux-persist@^6.0.0:
   version "6.0.0"
