@@ -1,8 +1,9 @@
 import React, {useEffect} from 'react';
-import {FlatList, StyleSheet, TextInput, View} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import {faker} from '@faker-js/faker';
 import StudentCardItem from '../../components/StudentCardItem';
 import SearchBar from '../../components/SearchBar';
+import ListEmptyComponent from '../../components/ListEmptyComponent';
 
 interface StudentListData {
   id: string;
@@ -70,6 +71,10 @@ const StudentList = ({navigation, token, login, students}) => {
             renderItem={renderItem}
             keyExtractor={item => item.id?.toString()}
             onEndReachedThreshold={0.9}
+            ListEmptyComponent={() => (
+              <ListEmptyComponent isSearch={!!searchQuery.length} />
+            )}
+            contentContainerStyle={styles.flatList}
             onEndReached={() => {
               // append more data to the list
               setStudentList([
@@ -96,6 +101,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
+  },
+  flatList: {
+    flexGrow: 1,
+    paddingBottom: 20,
   },
 });
 export default StudentList;

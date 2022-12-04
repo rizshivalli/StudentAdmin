@@ -3,6 +3,7 @@ import {FlatList, StyleSheet, View} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 import StudentCardItem from '../../components/StudentCardItem';
 import SearchBar from '../../components/SearchBar';
+import ListEmptyComponent from '../../components/ListEmptyComponent';
 
 interface StudentListData {
   id: string;
@@ -66,8 +67,11 @@ const ChatList = ({navigation, students}) => {
             keyExtractor={item => item.id?.toString()}
             onEndReachedThreshold={0.9}
             extraData={studentList.length}
+            ListEmptyComponent={() => (
+              <ListEmptyComponent isSearch={!!searchQuery.length} />
+            )}
+            contentContainerStyle={styles.flatList}
             onEndReached={() => {
-              console.log('first');
               // append more data to the list
               setStudentList([
                 ...studentList,
@@ -86,6 +90,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
+  },
+  flatList: {
+    flexGrow: 1,
+    paddingBottom: 30,
   },
 });
 export default ChatList;
