@@ -1,7 +1,16 @@
 import Card from '@components/card';
 import React, {useEffect} from 'react';
-import {FlatList, StyleSheet, Text, TextInput, View} from 'react-native';
+import {
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import SearchFilled from '../../assets/icons/SearchFilled.svg';
+import {faker} from '@faker-js/faker';
 
 const DATA = [
   {
@@ -18,11 +27,16 @@ const DATA = [
   },
 ];
 
-const Item = ({title}) => (
-  <Card>
-    <Text style={styles.title}>{title}</Text>
-  </Card>
-);
+interface StudentListData {
+  id: string;
+  student_picture: string;
+  student_first_name: string;
+  student_last_name: string;
+  student_class: string;
+  student_roll_no: string;
+}
+
+// create an array of 100 items of StudentListData from fakerjs
 
 const StudentList = ({navigation, token, login}) => {
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -32,6 +46,16 @@ const StudentList = ({navigation, token, login}) => {
     'color:#fff;background:#1f3c88;padding:3px;border-radius:2px',
     'color:#fff;background:rgb(251, 178, 23);padding:3px;border-radius:2px',
     searchQuery,
+  );
+  const [studentList, setStudentList] = React.useState<StudentListData[]>(
+    Array.from({length: 20}, () => ({
+      id: faker.random.numeric(120).toString(),
+      student_picture: faker.image.avatar(),
+      student_first_name: faker.name.firstName(),
+      student_last_name: faker.name.lastName(),
+      student_class: faker.random.numeric(2).toString(),
+      student_roll_no: faker.random.numeric(3).toString(),
+    })),
   );
 
   useEffect(() => {
@@ -43,7 +67,45 @@ const StudentList = ({navigation, token, login}) => {
 
   const onSearch = query => setSearchQuery(query);
 
-  const renderItem = ({item}) => <Item title={item.title} />;
+  const renderItem = ({item}) => {
+    const {
+      student_picture,
+      student_first_name,
+      student_last_name,
+      student_class,
+      student_roll_no,
+    } = item;
+    return (
+      <TouchableOpacity
+        style={{
+          flex: 1,
+          flexDirection: 'row',
+          margin: 5,
+          borderWidth: 1,
+          borderColor: 'lightgrey',
+          borderRadius: 12,
+        }}
+        onPress={() => navigation.navigate('StudentDetails', {item})}>
+        <View>
+          <Image source={{uri: student_picture}} style={styles.image} />
+        </View>
+        <View style={{flexDirection: 'column', paddingLeft: 10}}>
+          <View style={{flexDirection: 'row'}}>
+            <Text style={styles.title}>Last Name : </Text>
+            <Text style={styles.info}>{student_last_name}</Text>
+          </View>
+          <View style={{flexDirection: 'row'}}>
+            <Text style={styles.title}>Class : </Text>
+            <Text style={styles.info}>{student_class}</Text>
+          </View>
+          <View style={{flexDirection: 'row'}}>
+            <Text style={styles.title}>Roll Number: </Text>
+            <Text style={styles.info}>{student_roll_no}</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -58,13 +120,32 @@ const StudentList = ({navigation, token, login}) => {
 
         <SearchFilled width={25} height={25} />
       </View>
-      <View>
-        <FlatList
-          data={DATA}
-          renderItem={renderItem}
-          keyExtractor={item => item.id}
-        />
-      </View>
+      {studentList && (
+        <View>
+          <FlatList
+            initialNumToRender={20}
+            showsVerticalScrollIndicator={false}
+            data={studentList}
+            renderItem={renderItem}
+            keyExtractor={item => item.id.toString()}
+            onEndReachedThreshold={0.8}
+            onEndReached={() => {
+              // append more data to the list
+              setStudentList([
+                ...studentList,
+                ...Array.from({length: 20}, () => ({
+                  id: faker.random.numeric(120).toString(),
+                  student_picture: faker.image.avatar(),
+                  student_first_name: faker.name.firstName(),
+                  student_last_name: faker.name.lastName(),
+                  student_class: faker.random.numeric(2).toString(),
+                  student_roll_no: faker.random.numeric(3).toString(),
+                })),
+              ]);
+            }}
+          />
+        </View>
+      )}
     </View>
   );
 };
@@ -90,8 +171,18 @@ const styles = StyleSheet.create({
     borderColor: 'lightgrey',
   },
   title: {
-    fontSize: 32,
+    fontSize: 13.5,
     color: 'black',
+  },
+  info: {
+    fontSize: 14,
+    color: 'black',
+    fontWeight: 'bold',
+  },
+  image: {
+    width: 100,
+    height: 100,
+    borderRadius: 12,
   },
 });
 export default StudentList;
