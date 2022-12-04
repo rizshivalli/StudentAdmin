@@ -55,6 +55,7 @@ const StudentList = ({navigation, token, login}) => {
       student_last_name: faker.name.lastName(),
       student_class: faker.random.numeric(2).toString(),
       student_roll_no: faker.random.numeric(3).toString(),
+      student_profile_enabled: faker.datatype.boolean(),
     })),
   );
 
@@ -140,6 +141,7 @@ const StudentList = ({navigation, token, login}) => {
                   student_last_name: faker.name.lastName(),
                   student_class: faker.random.numeric(2).toString(),
                   student_roll_no: faker.random.numeric(3).toString(),
+                  student_profile_enabled: faker.datatype.boolean(),
                 })),
               ]);
             }}
