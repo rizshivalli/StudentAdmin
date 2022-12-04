@@ -2,6 +2,8 @@ import {CombinedState, combineReducers} from 'redux';
 import loading from './loading';
 import error from './error';
 import loginReducer from './login';
+import messagesReducer from './messages';
+import studentChatListReducer from './studentChatList';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {reducer as network} from 'react-native-offline';
@@ -13,6 +15,8 @@ const appReducer = combineReducers({
   error,
   loginReducer,
   network,
+  messagesReducer,
+  studentChatListReducer,
 });
 
 const rootReducer = (

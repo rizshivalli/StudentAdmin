@@ -11,21 +11,6 @@ import SearchFilled from '../../assets/icons/SearchFilled.svg';
 import {faker} from '@faker-js/faker';
 import FastImage from 'react-native-fast-image';
 
-const DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'First Item',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Second Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
-  },
-];
-
 interface StudentListData {
   id: string;
   student_picture: string;
@@ -37,7 +22,7 @@ interface StudentListData {
 
 // create an array of 100 items of StudentListData from fakerjs
 
-const StudentList = ({navigation, token, login}) => {
+const StudentList = ({navigation, token, login, students}) => {
   const [searchQuery, setSearchQuery] = React.useState('');
   console.log(
     '%cMyProject%cline:28%csearchQuery',
@@ -46,9 +31,10 @@ const StudentList = ({navigation, token, login}) => {
     'color:#fff;background:rgb(251, 178, 23);padding:3px;border-radius:2px',
     searchQuery,
   );
-  const [studentList, setStudentList] = React.useState<StudentListData[]>(
-    Array.from({length: 20}, () => ({
-      id: faker.random.numeric(120).toString(),
+  const [studentList, setStudentList] = React.useState<StudentListData[]>([
+    ...students,
+    ...Array.from({length: 20}, () => ({
+      id: faker.random.numeric(15).toString(),
       student_picture: faker.image.avatar(),
       student_first_name: faker.name.firstName(),
       student_last_name: faker.name.lastName(),
@@ -56,7 +42,7 @@ const StudentList = ({navigation, token, login}) => {
       student_roll_no: faker.random.numeric(3).toString(),
       student_profile_enabled: faker.datatype.boolean(),
     })),
-  );
+  ]);
 
   useEffect(() => {
     if (!token) {
@@ -87,7 +73,10 @@ const StudentList = ({navigation, token, login}) => {
         }}
         onPress={() => navigation.navigate('StudentProfile', {item})}>
         <View>
-          <FastImage source={{uri: student_picture}} style={styles.image} />
+          <FastImage
+            source={{uri: student_picture, priority: FastImage.priority.high}}
+            style={styles.image}
+          />
         </View>
         <View style={{flexDirection: 'column', paddingLeft: 10}}>
           <View style={{flexDirection: 'row'}}>
@@ -128,13 +117,13 @@ const StudentList = ({navigation, token, login}) => {
             data={studentList}
             renderItem={renderItem}
             keyExtractor={item => item.id.toString()}
-            onEndReachedThreshold={0.8}
+            onEndReachedThreshold={0.9}
             onEndReached={() => {
               // append more data to the list
               setStudentList([
                 ...studentList,
                 ...Array.from({length: 20}, () => ({
-                  id: faker.random.numeric(120).toString(),
+                  id: faker.random.numeric(15).toString(),
                   student_picture: faker.image.avatar(),
                   student_first_name: faker.name.firstName(),
                   student_last_name: faker.name.lastName(),

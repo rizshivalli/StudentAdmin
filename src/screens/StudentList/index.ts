@@ -2,7 +2,6 @@ import {connect, ConnectedProps} from 'react-redux';
 import StudentList from './StudentList';
 import type {Dispatch} from 'redux';
 import {LOG_IN, LOG_OUT, REQUEST} from '../../redux/actions';
-import {FormikHelpers} from 'formik';
 
 interface StateProps {
   loading: {
@@ -10,6 +9,9 @@ interface StateProps {
   };
   loginReducer: {
     token: string;
+  };
+  studentChatListReducer: {
+    students: Array<any>;
   };
 }
 export type FormValues = {
@@ -20,7 +22,6 @@ export type FormValues = {
 interface DispatchProps {
   login: {
     values: FormValues;
-    actions?: FormikHelpers<FormValues>;
     callback?: (payload?: any) => void;
   };
 }
@@ -28,9 +29,11 @@ interface DispatchProps {
 const mapStateToProps = (state: StateProps) => {
   const {login: loginLoading} = state.loading || {};
   const {token} = state.loginReducer || {};
+  const {students} = state.studentChatListReducer || {};
   return {
     loginLoading,
     token,
+    students,
   };
 };
 
@@ -41,7 +44,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     });
   };
   const login = (props: DispatchProps['login']) => {
-    const {values, actions, callback = () => {}} = props || {};
+    const {values, callback = () => {}} = props || {};
     const {
       identifier = 'rizshivalli@gmail.com',
       password = 'qwertyuiop',
@@ -49,7 +52,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     return dispatch({
       type: `${LOG_IN}_${REQUEST}`,
       payload: {identifier, password},
-      actions: actions,
       callback: callback,
     });
   };
