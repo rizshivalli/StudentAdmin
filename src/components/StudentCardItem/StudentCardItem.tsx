@@ -4,38 +4,39 @@ import FastImage from 'react-native-fast-image';
 
 interface StudentListData {
   item: {
-    student_picture: string;
-    student_first_name: string;
-    student_last_name: string;
-    student_class: string;
-    student_roll_no: string;
+    picture: string;
+    first_name: string;
+    last_name: string;
+    class: string;
+    roll_number: string;
   };
   onPress: () => void;
+  id: number;
 }
-const StudentCardItem: FC<StudentListData> = ({item, onPress}) => {
-  const {student_picture, student_last_name, student_class, student_roll_no} =
-    item || {};
+
+const StudentCardItem: FC<StudentListData> = ({item, onPress, id}) => {
+  const {picture, last_name, roll_number} = item || {};
 
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
+    <TouchableOpacity style={styles.container} onPress={onPress} key={id}>
       <View>
         <FastImage
-          source={{uri: student_picture, priority: FastImage.priority.high}}
+          source={{uri: picture, priority: FastImage.priority.high}}
           style={styles.image}
         />
       </View>
       <View style={styles.column}>
         <View style={styles.row}>
           <Text style={styles.title}>Last Name : </Text>
-          <Text style={styles.info}>{student_last_name}</Text>
+          <Text style={styles.info}>{last_name}</Text>
         </View>
         <View style={styles.row}>
           <Text style={styles.title}>Class : </Text>
-          <Text style={styles.info}>{student_class}</Text>
+          <Text style={styles.info}>{item?.class}</Text>
         </View>
         <View style={styles.row}>
           <Text style={styles.title}>Roll Number: </Text>
-          <Text style={styles.info}>{student_roll_no}</Text>
+          <Text style={styles.info}>{roll_number}</Text>
         </View>
       </View>
     </TouchableOpacity>

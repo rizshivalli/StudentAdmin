@@ -4,31 +4,23 @@ import FastImage from 'react-native-fast-image';
 
 const StudentProfile = ({navigation, route}) => {
   const {item} = route.params || {};
-  const {
-    student_picture,
-    student_first_name,
-    student_last_name,
-    student_class,
-    student_roll_no,
-    student_profile_enabled,
-  } = item || {};
-  const [isEnabled, setIsEnabled] = React.useState(student_profile_enabled);
+  const {id, attributes} = item;
+  const {picture, first_name, last_name, roll_no, enabled} = attributes || {};
+
+  const [isEnabled, setIsEnabled] = React.useState(enabled);
 
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
-        <FastImage source={{uri: student_picture}} style={styles.image} />
-        <Text
-          style={
-            styles.studentName
-          }>{`${student_first_name} ${student_last_name}`}</Text>
+        <FastImage source={{uri: picture}} style={styles.image} />
+        <Text style={styles.studentName}>{`${first_name} ${last_name}`}</Text>
       </View>
 
       <View style={styles.infoContainer}>
         <Text style={styles.title}>Class : </Text>
-        <Text style={styles.info}>{student_class}</Text>
+        <Text style={styles.info}>{item.class}</Text>
         <Text style={styles.title}>Roll Number: </Text>
-        <Text style={styles.info}>{student_roll_no}</Text>
+        <Text style={styles.info}>{roll_no}</Text>
       </View>
       {/* Enable / Disable Profile */}
       <View style={styles.switchContainer}>

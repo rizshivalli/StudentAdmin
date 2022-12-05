@@ -27,7 +27,9 @@ const ChatList = ({navigation, students}) => {
   useFocusEffect(
     React.useCallback(() => {
       // Do something when the screen is focused
-      const sortedList = students.sort((a, b) => b.date - a.date);
+      const sortedList = students.sort(
+        (a, b) => b.attributes.date - a.attributes.date,
+      );
       setStudentList(sortedList);
     }, [students]),
   );
@@ -44,9 +46,11 @@ const ChatList = ({navigation, students}) => {
   };
 
   const renderItem = ({item}) => {
+    const {id, attributes} = item;
     return (
       <StudentCardItem
-        item={item}
+        id={id}
+        item={attributes}
         onPress={() => {
           navigation.navigate('ChatScreen', {item});
         }}

@@ -1,9 +1,10 @@
 import React, {useEffect} from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
+import {ActivityIndicator, FlatList, StyleSheet, View} from 'react-native';
 import {faker} from '@faker-js/faker';
 import StudentCardItem from '../../components/StudentCardItem';
 import SearchBar from '../../components/SearchBar';
 import ListEmptyComponent from '../../components/ListEmptyComponent';
+import {useFocusEffect} from '@react-navigation/native';
 
 interface StudentListData {
   id: string;
@@ -16,28 +17,38 @@ interface StudentListData {
 
 // create an array of 100 items of StudentListData from fakerjs
 
-const StudentList = ({navigation, token, login, students}) => {
+const StudentList = ({navigation, token, login, students, fetchStudents}) => {
   const [searchQuery, setSearchQuery] = React.useState('');
-  const [studentList, setStudentList] = React.useState<StudentListData[]>([
-    ...students,
-    ...Array.from({length: 20}, () => ({
-      id: faker.random.numeric(15).toString(),
-      student_picture: faker.image.avatar(),
-      student_first_name: faker.name.firstName(),
-      student_last_name: faker.name.lastName(),
-      student_class: faker.random.numeric(2).toString(),
-      student_roll_no: faker.random.numeric(3).toString(),
-      student_profile_enabled: faker.datatype.boolean(),
-    })),
-  ]);
+  const [studentList, setStudentList] =
+    React.useState<StudentListData[]>(students);
   const [searchList, setSearchList] = React.useState<StudentListData[]>([]);
 
   useEffect(() => {
     if (!token) {
       login();
     }
+
     return () => {};
   }, [token, login]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if ([].length === 0 && token) {
+        fetchStudents({
+          payload: {
+            token: token,
+          },
+          callback: data => {
+            setStudentList(data);
+          },
+        });
+      }
+      return () => {
+        // Do something when the screen is unfocused
+        // Useful for cleanup functions
+      };
+    }, [fetchStudents, token]),
+  );
 
   const onSearch = (query: string) => {
     setSearchQuery(query);
@@ -51,9 +62,11 @@ const StudentList = ({navigation, token, login, students}) => {
   };
 
   const renderItem = ({item}) => {
+    const {id, attributes} = item;
     return (
       <StudentCardItem
-        item={item}
+        id={id}
+        item={attributes}
         onPress={() => navigation.navigate('StudentProfile', {item})}
       />
     );
@@ -62,7 +75,7 @@ const StudentList = ({navigation, token, login, students}) => {
   return (
     <View style={styles.container}>
       <SearchBar onSearch={onSearch} searchQuery={searchQuery} />
-      {studentList && (
+      {studentList ? (
         <View>
           <FlatList
             initialNumToRender={20}
@@ -77,21 +90,14 @@ const StudentList = ({navigation, token, login, students}) => {
             contentContainerStyle={styles.flatList}
             onEndReached={() => {
               // append more data to the list
-              setStudentList([
-                ...studentList,
-                ...Array.from({length: 20}, () => ({
-                  id: faker.random.numeric(15).toString(),
-                  student_picture: faker.image.avatar(),
-                  student_first_name: faker.name.firstName(),
-                  student_last_name: faker.name.lastName(),
-                  student_class: faker.random.numeric(2).toString(),
-                  student_roll_no: faker.random.numeric(3).toString(),
-                  student_profile_enabled: faker.datatype.boolean(),
-                })),
-              ]);
+              // setStudentList([
+              //   ...studentList,
+              // ]);
             }}
           />
         </View>
+      ) : (
+        <ActivityIndicator />
       )}
     </View>
   );

@@ -11,9 +11,11 @@ const ChatScreen = ({
   storeStudentChatList,
 }) => {
   const {item} = route.params || {};
+  const {id, attributes} = item;
+  const {picture, first_name} = attributes || {};
 
   // find messages from prevMessages object that match the id of the item
-  const previousMessages = prevMessages[item.id] || [];
+  const previousMessages = prevMessages[id] || [];
 
   const [messages, setMessages] = React.useState<IMessage[]>(previousMessages);
   const [userTyping, setUserTyping] = React.useState(false);
@@ -21,10 +23,10 @@ const ChatScreen = ({
   React.useEffect(() => {
     return () => {
       if (messages.length) {
-        storeMessages({user_id: item.id, messages: messages});
+        storeMessages({user_id: id, messages: messages});
         // add date to item object
         if (previousMessages.length !== messages.length) {
-          item.date = +new Date();
+          item.attributes.date = +new Date();
           storeStudentChatList(item);
         }
       }
@@ -44,9 +46,9 @@ const ChatScreen = ({
           text: faker.hacker.phrase(),
           createdAt: new Date(),
           user: {
-            _id: item.id,
-            name: item.student_first_name,
-            avatar: item.student_picture,
+            _id: id,
+            name: first_name,
+            avatar: picture,
           },
         }),
       );
@@ -64,7 +66,7 @@ const ChatScreen = ({
           renderUsernameOnMessage: true,
           renderAvatar: () => (
             <FastImage
-              source={{uri: item.student_picture}}
+              source={{uri: picture}}
               style={{width: 30, height: 30, borderRadius: 20}}
             />
           ),
@@ -74,7 +76,7 @@ const ChatScreen = ({
                 <Text
                   style={
                     styles.emptyChatText
-                  }>{`You have not sent any messages to ${item.student_first_name}`}</Text>
+                  }>{`You have not sent any messages to ${first_name}`}</Text>
               </View>
             );
           },
