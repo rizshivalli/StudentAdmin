@@ -1,8 +1,31 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {GiftedChat, IMessage} from 'react-native-gifted-chat';
-import {faker} from '@faker-js/faker';
 import FastImage from 'react-native-fast-image';
+
+const quotes = [
+  'The best way to predict the future is to invent it.',
+  'The future belongs to those who believe in the beauty of their dreams.',
+  'The future depends on what you do today.',
+  'The Purpose of our lives is to be happy.',
+  'The Function of education is to teach one to think intensively and to think critically. Intelligence plus character - that is the goal of true education.',
+  'The best and most beautiful things in the world cannot be seen or even touched - they must be felt with the heart.',
+  'The most difficult thing is the decision to act, the rest is merely tenacity.',
+  'The secret of getting ahead is getting started.',
+  'The best revenge is massive success.',
+  'The only person you are destined to become is the person you decide to be.',
+  'The mind is everything. What you think you become.',
+  'The best time to plant a tree was 20 years ago. The second best time is now.',
+  'The only way to do great work is to love what you do.',
+  'The whole future lies in uncertainty: live immediately.',
+  'The pessimist sees difficulty in every opportunity. The optimist sees the opportunity in every difficulty.',
+  'The one who falls and gets up is stronger than the one who never tried.',
+  "The only way to do great work is to love what you do. If you haven't found it yet, keep looking. Don't settle. As with all matters of the heart, you'll know when you find it.",
+  'The best revenge is massive success.',
+  'The future belongs to those who believe in the beauty of their dreams.',
+  'The best way to predict the future is to invent it.',
+  'The purpose in life is not to win. The purpose in life is to grow. The purpose in life is to be, be, be.',
+];
 
 const ChatScreen = ({
   route,
@@ -42,8 +65,8 @@ const ChatScreen = ({
     setTimeout(() => {
       setMessages(previousMessages =>
         GiftedChat.append(previousMessages, {
-          _id: faker.random.numeric(15).toString(),
-          text: faker.hacker.phrase(),
+          _id: Math.floor(100000 + Math.random() * 900000),
+          text: quotes[Math.floor(Math.random() * quotes.length)],
           createdAt: new Date(),
           user: {
             _id: id,

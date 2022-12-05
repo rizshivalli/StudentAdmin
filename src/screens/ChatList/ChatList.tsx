@@ -7,14 +7,15 @@ import ListEmptyComponent from '../../components/ListEmptyComponent';
 
 interface StudentListData {
   id: string;
-  student_picture: string;
-  student_first_name: string;
-  student_last_name: string;
-  student_class: string;
-  student_roll_no: string;
+  attributes: {
+    student_id: string;
+    picture: string;
+    first_name: string;
+    last_name: string;
+    class: string;
+    roll_no: string;
+  };
 }
-
-// create an array of 100 items of StudentListData from fakerjs
 
 const ChatList = ({navigation, students}) => {
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -36,9 +37,9 @@ const ChatList = ({navigation, students}) => {
 
   const onSearch = (query: string) => {
     setSearchQuery(query);
-    // search studentList for query in Student_last_name
+    // search studentList for query in last_name
     const filteredList = studentList.filter(student =>
-      student.student_last_name
+      student.attributes.last_name
         .toLowerCase()
         .includes(query.trim().toLowerCase()),
     );

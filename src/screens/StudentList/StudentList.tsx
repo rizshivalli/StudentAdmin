@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import {ActivityIndicator, FlatList, StyleSheet, View} from 'react-native';
-import {faker} from '@faker-js/faker';
 import StudentCardItem from '../../components/StudentCardItem';
 import SearchBar from '../../components/SearchBar';
 import ListEmptyComponent from '../../components/ListEmptyComponent';
@@ -8,20 +7,22 @@ import {useFocusEffect} from '@react-navigation/native';
 
 interface StudentListData {
   id: string;
-  student_picture: string;
-  student_first_name: string;
-  student_last_name: string;
-  student_class: string;
-  student_roll_no: string;
+  attributes: {
+    student_id: string;
+    picture: string;
+    first_name: string;
+    last_name: string;
+    class: string;
+    roll_number: string;
+  };
 }
-
-// create an array of 100 items of StudentListData from fakerjs
 
 const StudentList = ({navigation, token, login, students, fetchStudents}) => {
   const [searchQuery, setSearchQuery] = React.useState('');
   const [studentList, setStudentList] =
     React.useState<StudentListData[]>(students);
   const [searchList, setSearchList] = React.useState<StudentListData[]>([]);
+  const [currentPage, setCurrentPage] = React.useState(1);
 
   useEffect(() => {
     if (!token) {
@@ -37,9 +38,11 @@ const StudentList = ({navigation, token, login, students, fetchStudents}) => {
         fetchStudents({
           payload: {
             token: token,
+            page: 1,
           },
           callback: data => {
             setStudentList(data);
+            setCurrentPage(1);
           },
         });
       }
@@ -52,9 +55,9 @@ const StudentList = ({navigation, token, login, students, fetchStudents}) => {
 
   const onSearch = (query: string) => {
     setSearchQuery(query);
-    // search studentList for query in Student_last_name
+    // search studentList for query in last_name
     const filteredList = studentList.filter(student =>
-      student.student_last_name
+      student.attributes.last_name
         .toLowerCase()
         .includes(query.trim().toLowerCase()),
     );
@@ -88,11 +91,20 @@ const StudentList = ({navigation, token, login, students, fetchStudents}) => {
               <ListEmptyComponent isSearch={!!searchQuery.length} />
             )}
             contentContainerStyle={styles.flatList}
-            onEndReached={() => {
-              // append more data to the list
-              // setStudentList([
-              //   ...studentList,
-              // ]);
+            onEndReached={async () => {
+              // fetch more students and append to studentList
+              await fetchStudents({
+                payload: {
+                  token: token,
+                  page: currentPage + 1,
+                },
+                callback: data => {
+                  if (data.length) {
+                    setStudentList([...studentList, ...data]);
+                    setCurrentPage(currentPage + 1);
+                  }
+                },
+              });
             }}
           />
         </View>
