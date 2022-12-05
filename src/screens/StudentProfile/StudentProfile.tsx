@@ -1,11 +1,13 @@
 import React from 'react';
 import {StyleSheet, Text, View, Switch, TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
+import ChatFilled from '../../assets/icons/ChatFilled.svg';
 
 const StudentProfile = ({navigation, route}) => {
   const {item} = route.params || {};
   const {id, attributes} = item;
-  const {picture, first_name, last_name, roll_no, enabled} = attributes || {};
+  const {picture, first_name, last_name, roll_number, enabled} =
+    attributes || {};
 
   const [isEnabled, setIsEnabled] = React.useState(enabled);
 
@@ -18,9 +20,9 @@ const StudentProfile = ({navigation, route}) => {
 
       <View style={styles.infoContainer}>
         <Text style={styles.title}>Class : </Text>
-        <Text style={styles.info}>{item.class}</Text>
+        <Text style={styles.info}>{attributes.class}</Text>
         <Text style={styles.title}>Roll Number: </Text>
-        <Text style={styles.info}>{roll_no}</Text>
+        <Text style={styles.info}>{roll_number}</Text>
       </View>
       {/* Enable / Disable Profile */}
       <View style={styles.switchContainer}>
@@ -41,7 +43,7 @@ const StudentProfile = ({navigation, route}) => {
         onPress={() => {
           navigation.navigate('ChatScreen', {item});
         }}>
-        <Text style={styles.fabIcon}>+</Text>
+        <ChatFilled />
       </TouchableOpacity>
     </View>
   );
@@ -63,6 +65,7 @@ const styles = StyleSheet.create({
   studentName: {
     fontSize: 20,
     fontWeight: 'bold',
+    color: '#000',
   },
   infoContainer: {
     flexDirection: 'row',
@@ -75,10 +78,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     margin: 10,
+    color: '#000',
   },
   info: {
     fontSize: 20,
     margin: 10,
+    color: '#000',
   },
   switchContainer: {
     flexDirection: 'row',
@@ -88,6 +93,7 @@ const styles = StyleSheet.create({
   switchTitle: {
     fontSize: 20,
     fontWeight: 'bold',
+    color: '#000',
   },
   fab: {
     position: 'absolute',
@@ -97,8 +103,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     right: 30,
     bottom: 30,
-    backgroundColor: '#0af',
-    borderRadius: 30,
     elevation: 8,
   },
   fabIcon: {

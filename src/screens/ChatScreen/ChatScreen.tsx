@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {GiftedChat, IMessage} from 'react-native-gifted-chat';
+import {GiftedChat, IMessage, InputToolbar} from 'react-native-gifted-chat';
 import FastImage from 'react-native-fast-image';
 
 const quotes = [
@@ -26,6 +26,16 @@ const quotes = [
   'The best way to predict the future is to invent it.',
   'The purpose in life is not to win. The purpose in life is to grow. The purpose in life is to be, be, be.',
 ];
+
+const renderInputToolbar = props => {
+  return (
+    <InputToolbar
+      {...props}
+      placeholder="Message..."
+      textInputStyle={styles.textInputStyle}
+    />
+  );
+};
 
 const ChatScreen = ({
   route,
@@ -87,6 +97,7 @@ const ChatScreen = ({
           onSend,
           isTyping: userTyping,
           renderUsernameOnMessage: true,
+          renderInputToolbar: renderInputToolbar,
           renderAvatar: () => (
             <FastImage
               source={{uri: picture}}
@@ -126,6 +137,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#000',
     transform: [{rotate: '180deg'}],
+  },
+  textInputStyle: {
+    fontSize: 16,
+    color: '#000',
   },
 });
 export default ChatScreen;

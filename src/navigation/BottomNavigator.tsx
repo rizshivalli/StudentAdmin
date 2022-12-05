@@ -34,6 +34,7 @@ const BottomNavigator = () => {
       screenOptions={() => ({
         tabBarActiveTintColor: 'tomato',
         tabBarInactiveTintColor: 'gray',
+        keyboardHidesTabBar: true,
       })}>
       <Tab.Screen
         name="StudentList"
