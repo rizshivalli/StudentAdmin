@@ -17,40 +17,35 @@ interface StudentListData {
   };
 }
 
-const StudentList = ({navigation, token, login, students, fetchStudents}) => {
+const StudentList = ({
+  navigation,
+  students,
+  fetchStudents,
+  studentChatLoading,
+}) => {
   const [searchQuery, setSearchQuery] = React.useState('');
   const [studentList, setStudentList] =
     React.useState<StudentListData[]>(students);
   const [searchList, setSearchList] = React.useState<StudentListData[]>([]);
   const [currentPage, setCurrentPage] = React.useState(1);
 
-  useEffect(() => {
-    if (!token) {
-      login();
-    }
-
-    return () => {};
-  }, [token, login]);
-
   useFocusEffect(
     React.useCallback(() => {
-      if ([].length === 0 && token) {
-        fetchStudents({
-          payload: {
-            token: token,
-            page: 1,
-          },
-          callback: data => {
-            setStudentList(data);
-            setCurrentPage(1);
-          },
-        });
-      }
+      fetchStudents({
+        payload: {
+          page: 1,
+        },
+        callback: data => {
+          setStudentList(data);
+          setCurrentPage(1);
+        },
+      });
+
       return () => {
         // Do something when the screen is unfocused
         // Useful for cleanup functions
       };
-    }, [fetchStudents, token]),
+    }, [fetchStudents]),
   );
 
   const onSearch = (query: string) => {
@@ -78,7 +73,7 @@ const StudentList = ({navigation, token, login, students, fetchStudents}) => {
   return (
     <View style={styles.container}>
       <SearchBar onSearch={onSearch} searchQuery={searchQuery} />
-      {studentList ? (
+      {!studentChatLoading ? (
         <View>
           <FlatList
             initialNumToRender={20}
@@ -95,7 +90,6 @@ const StudentList = ({navigation, token, login, students, fetchStudents}) => {
               // fetch more students and append to studentList
               await fetchStudents({
                 payload: {
-                  token: token,
                   page: currentPage + 1,
                 },
                 callback: data => {
@@ -109,7 +103,9 @@ const StudentList = ({navigation, token, login, students, fetchStudents}) => {
           />
         </View>
       ) : (
-        <ActivityIndicator />
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <ActivityIndicator size="large" />
+        </View>
       )}
     </View>
   );

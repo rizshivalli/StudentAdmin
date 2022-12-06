@@ -6,10 +6,9 @@ import {FETCH_STUDENTS, LOG_IN, LOG_OUT, REQUEST} from '../../redux/actions';
 interface StateProps {
   loading: {
     login?: boolean;
+    FETCH_STUDENTS?: boolean;
   };
-  loginReducer: {
-    jwt: string;
-  };
+
   studentChatListReducer: {
     students: Array<any>;
   };
@@ -27,43 +26,21 @@ interface DispatchProps {
   fetchStudents: {
     callback?: (payload?: any) => void;
     payload?: {
-      limit?: number;
-      start?: number;
-      token?: string;
+      page: number;
     };
   };
 }
 
 const mapStateToProps = (state: StateProps) => {
-  const {login: loginLoading} = state.loading || {};
-  const {jwt: token} = state.loginReducer || {};
+  const {FETCH_STUDENTS: studentChatLoading} = state.loading || {};
   const {students} = state.studentChatListReducer || {};
   return {
-    loginLoading,
-    token,
     students,
+    studentChatLoading: Boolean(studentChatLoading),
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
-  const logout = () => {
-    return dispatch({
-      type: `${LOG_OUT}`,
-    });
-  };
-  const login = (props: DispatchProps['login']) => {
-    const {values, callback = () => {}} = props || {};
-    const {
-      identifier = 'rizshivalli@gmail.com',
-      password = 'qwertyuiop',
-    }: FormValues = values || {};
-    return dispatch({
-      type: `${LOG_IN}_${REQUEST}`,
-      payload: {identifier, password},
-      callback: callback,
-    });
-  };
-
   const fetchStudents = (props: DispatchProps['fetchStudents']) => {
     const {callback = () => {}, payload} = props || {};
     return dispatch({
@@ -74,8 +51,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   };
 
   return {
-    logout,
-    login,
     fetchStudents,
   };
 };

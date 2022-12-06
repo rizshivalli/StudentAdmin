@@ -1,7 +1,6 @@
 import {CombinedState, combineReducers} from 'redux';
 import loading from './loading';
 import error from './error';
-import loginReducer from './login';
 import messagesReducer from './messages';
 import studentChatListReducer from './studentChatList';
 
@@ -13,7 +12,6 @@ import {NetworkState} from 'react-native-offline/dist/src/types';
 const appReducer = combineReducers({
   loading,
   error,
-  loginReducer,
   network,
   messagesReducer,
   studentChatListReducer,
@@ -25,6 +23,7 @@ const rootReducer = (
         loading: {[key: string]: any};
         error: {[key: string]: any};
         network: NetworkState;
+        messagesReducer: {[key: string]: any};
       }>
     | undefined,
   action: {type: string; payload?: any},

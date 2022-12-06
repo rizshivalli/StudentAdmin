@@ -32,15 +32,12 @@ function* FetchStudentsFromAPI({
   any
 > {
   try {
-    const {token, page, ...rest} = payload;
+    const {page, ...rest} = payload;
     const res = yield call(
       API_INSTANCE().get,
       `${STUDENTS}?pagination[page]=${page}`,
       {
         ...rest,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
       },
     );
     if (res.data.data) {
