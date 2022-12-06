@@ -14,8 +14,21 @@ const StackNavigation = () => {
         component={BottomNavigator}
         options={{headerShown: false}}
       />
-      <MainStack.Screen name="StudentProfile" component={StudentProfile} />
-      <MainStack.Screen name="ChatScreen" component={ChatScreen} />
+      <MainStack.Screen
+        name="StudentProfile"
+        component={StudentProfile}
+        options={{
+          headerTitle: 'Student Profile',
+        }}
+      />
+      <MainStack.Screen
+        name="ChatScreen"
+        component={ChatScreen}
+        options={{
+          headerTitle: 'Chat Screen',
+          headerBackTitle: 'Profile',
+        }}
+      />
     </MainStack.Navigator>
   );
 };

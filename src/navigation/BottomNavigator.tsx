@@ -43,6 +43,7 @@ const BottomNavigator = () => {
           //   tabBarLabel: ({focused}) => getTabBarLabel('Profile', focused),
           tabBarIcon: ({focused}) =>
             getTabBarIcon(StudentFilled, StudentOutlined, focused),
+          headerTitle: 'Student List',
         }}
       />
       <Tab.Screen
@@ -52,6 +53,7 @@ const BottomNavigator = () => {
           //   tabBarLabel: ({focused}) => getTabBarLabel('Profile', focused),
           tabBarIcon: ({focused}) =>
             getTabBarIcon(ChatFilled, ChatOutlined, focused),
+          headerTitle: 'Chat List',
         }}
       />
     </Tab.Navigator>
