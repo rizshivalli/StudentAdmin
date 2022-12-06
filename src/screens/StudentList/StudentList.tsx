@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
+import {ActivityIndicator, FlatList, StyleSheet, View} from 'react-native';
 import StudentCardItem from '../../components/StudentCardItem';
 import SearchBar from '../../components/SearchBar';
 import ListEmptyComponent from '../../components/ListEmptyComponent';
@@ -29,6 +29,7 @@ const StudentList = ({
     React.useState<StudentListData[]>(students);
   const [searchList, setSearchList] = React.useState<StudentListData[]>([]);
   const [currentPage, setCurrentPage] = React.useState(1);
+  const [lastPageReached, setLastPageReached] = React.useState(false);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -45,6 +46,7 @@ const StudentList = ({
       return () => {
         // Do something when the screen is unfocused
         // Useful for cleanup functions
+        setLastPageReached(false);
       };
     }, [fetchStudents]),
   );
@@ -74,21 +76,33 @@ const StudentList = ({
   return (
     <View style={styles.container}>
       <SearchBar onSearch={onSearch} searchQuery={searchQuery} />
-      {!studentChatLoading ? (
-        <View style={styles.flex1}>
-          <FlatList
-            initialNumToRender={20}
-            showsVerticalScrollIndicator={false}
-            data={searchQuery.length ? searchList : studentList}
-            renderItem={renderItem}
-            keyExtractor={item => item.id?.toString()}
-            onEndReachedThreshold={0.9}
-            ListEmptyComponent={() => (
-              <ListEmptyComponent isSearch={!!searchQuery.length} />
-            )}
-            contentContainerStyle={styles.flatList}
-            onEndReached={async () => {
-              // fetch more students and append to studentList
+
+      <View style={styles.flex1}>
+        <FlatList
+          initialNumToRender={20}
+          showsVerticalScrollIndicator={false}
+          data={searchQuery.length ? searchList : studentList}
+          renderItem={renderItem}
+          keyExtractor={item => item.id?.toString()}
+          extraData={searchQuery}
+          onEndReachedThreshold={1}
+          ListEmptyComponent={() => {
+            return !studentChatLoading && Boolean(!students.length) ? (
+              <ListEmptyComponent isSearch={Boolean(searchQuery.length)} />
+            ) : (
+              <FullPageLoader />
+            );
+          }}
+          ListFooterComponent={() => {
+            if (studentChatLoading && studentList.length) {
+              return <ActivityIndicator />;
+            }
+            return null;
+          }}
+          contentContainerStyle={styles.flatList}
+          onEndReached={async () => {
+            // fetch more students and append to studentList
+            if (!lastPageReached) {
               await fetchStudents({
                 payload: {
                   page: currentPage + 1,
@@ -97,15 +111,15 @@ const StudentList = ({
                   if (data.length) {
                     setStudentList([...studentList, ...data]);
                     setCurrentPage(currentPage + 1);
+                  } else {
+                    setLastPageReached(true);
                   }
                 },
               });
-            }}
-          />
-        </View>
-      ) : (
-        <FullPageLoader />
-      )}
+            }
+          }}
+        />
+      </View>
     </View>
   );
 };
