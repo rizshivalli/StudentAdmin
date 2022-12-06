@@ -107,10 +107,7 @@ const ChatScreen = ({
           minInputToolbarHeight: 50,
           renderInputToolbar: renderInputToolbar,
           renderAvatar: () => (
-            <FastImage
-              source={{uri: picture}}
-              style={{width: 30, height: 30, borderRadius: 20}}
-            />
+            <FastImage source={{uri: picture}} style={styles.avatar} />
           ),
           renderChatEmpty: () => {
             return (
@@ -154,5 +151,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#000',
   },
+  avatar: {width: 30, height: 30, borderRadius: 20},
 });
 export default ChatScreen;
