@@ -63,7 +63,7 @@ const ChatList = ({navigation, students}) => {
     <View style={styles.container}>
       <SearchBar onSearch={onSearch} searchQuery={searchQuery} />
       {studentList && (
-        <View>
+        <View style={styles.flex1}>
           <FlatList
             initialNumToRender={20}
             showsVerticalScrollIndicator={false}
@@ -99,6 +99,9 @@ const styles = StyleSheet.create({
   flatList: {
     flexGrow: 1,
     paddingBottom: 30,
+  },
+  flex1: {
+    flex: 1,
   },
 });
 export default ChatList;

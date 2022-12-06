@@ -1,9 +1,10 @@
-import React, {useEffect} from 'react';
-import {ActivityIndicator, FlatList, StyleSheet, View} from 'react-native';
+import React from 'react';
+import {FlatList, StyleSheet, View} from 'react-native';
 import StudentCardItem from '../../components/StudentCardItem';
 import SearchBar from '../../components/SearchBar';
 import ListEmptyComponent from '../../components/ListEmptyComponent';
 import {useFocusEffect} from '@react-navigation/native';
+import FullPageLoader from '../../components/FullPageLoader';
 
 interface StudentListData {
   id: string;
@@ -74,7 +75,7 @@ const StudentList = ({
     <View style={styles.container}>
       <SearchBar onSearch={onSearch} searchQuery={searchQuery} />
       {!studentChatLoading ? (
-        <View>
+        <View style={styles.flex1}>
           <FlatList
             initialNumToRender={20}
             showsVerticalScrollIndicator={false}
@@ -103,9 +104,7 @@ const StudentList = ({
           />
         </View>
       ) : (
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <ActivityIndicator size="large" />
-        </View>
+        <FullPageLoader />
       )}
     </View>
   );
@@ -119,6 +118,9 @@ const styles = StyleSheet.create({
   flatList: {
     flexGrow: 1,
     paddingBottom: 20,
+  },
+  flex1: {
+    flex: 1,
   },
 });
 export default StudentList;
