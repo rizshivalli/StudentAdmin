@@ -1,6 +1,11 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {GiftedChat, IMessage, InputToolbar} from 'react-native-gifted-chat';
+import {
+  Composer,
+  GiftedChat,
+  IMessage,
+  InputToolbar,
+} from 'react-native-gifted-chat';
 import FastImage from 'react-native-fast-image';
 
 const quotes = [
@@ -97,6 +102,9 @@ const ChatScreen = ({
           onSend,
           isTyping: userTyping,
           renderUsernameOnMessage: true,
+          minComposerHeight: 28,
+          maxComposerHeight: 100,
+          minInputToolbarHeight: 50,
           renderInputToolbar: renderInputToolbar,
           renderAvatar: () => (
             <FastImage
@@ -113,6 +121,10 @@ const ChatScreen = ({
                   }>{`You have not sent any messages to ${first_name}`}</Text>
               </View>
             );
+          },
+          renderComposer(props) {
+            // where composer is my first post
+            return <Composer {...props} composerHeight="auto" />;
           },
         }}
         user={{
