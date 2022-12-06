@@ -21,6 +21,7 @@ const StudentCardItem: FC<StudentListData> = ({item, onPress, id}) => {
     <TouchableOpacity style={styles.container} onPress={onPress} key={id}>
       <View>
         <FastImage
+          testID="studentImage"
           source={{uri: picture, priority: FastImage.priority.high}}
           style={styles.image}
         />

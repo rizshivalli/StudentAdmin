@@ -28,6 +28,7 @@ const StudentProfile = ({navigation, route}) => {
       <View style={styles.switchContainer}>
         <Text style={styles.switchTitle}>Enable / Disable Profile</Text>
         <Switch
+          testID="switch"
           trackColor={{false: '#767577', true: '#81b0ff'}}
           thumbColor={true ? '#f5dd4b' : '#f4f3f4'}
           ios_backgroundColor="#3e3e3e"
@@ -39,6 +40,7 @@ const StudentProfile = ({navigation, route}) => {
       </View>
       {/* Floating action button for Navigation to Chat Screen */}
       <TouchableOpacity
+        testID="fab"
         style={styles.fab}
         onPress={() => {
           navigation.navigate('ChatScreen', {item});

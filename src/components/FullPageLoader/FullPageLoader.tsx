@@ -4,7 +4,7 @@ import {ActivityIndicator, StyleSheet, View} from 'react-native';
 const FullPageLoader = () => {
   return (
     <View style={styles.container}>
-      <ActivityIndicator size="large" />
+      <ActivityIndicator testID="loader" size="large" />
     </View>
   );
 };

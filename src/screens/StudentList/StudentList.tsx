@@ -79,6 +79,7 @@ const StudentList = ({
 
       <View style={styles.flex1}>
         <FlatList
+          testID="student-list"
           initialNumToRender={20}
           showsVerticalScrollIndicator={false}
           data={searchQuery.length ? searchList : studentList}
